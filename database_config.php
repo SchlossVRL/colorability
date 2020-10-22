@@ -1,8 +1,8 @@
 <?php
 
-$servername = "localhost";
-$username = "kushin_testing";
-$password = "kushinm11";
+$servername = "";
+$username = "";
+$password = "";
 $dbname = "colorability";
 $table_conditions = "condition_log";
 $table_data = "data_log";
