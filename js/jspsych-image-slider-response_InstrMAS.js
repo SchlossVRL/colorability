@@ -139,16 +139,16 @@ jsPsych.plugins['image-slider-response_InstrMAS'] = (function() {
 
     //Text prompt1
     if (trial.prompt1 !== null){
-       html += '<span style="text-align: center; font-size: 100%;">'+trial.prompt1+'</span>'
+       html += '<span style="text-align: left; font-size: 100%;">'+trial.prompt1+'</span>'
    }
 
     html += '<div id="jspsych-image-slider-response-wrapper" style="margin: 35px 0px;">';
-    html += '<div><div id="concept-list" style="width: 20%; float:left; padding-left:20%"><p style="font-size: 200%"><br><br>'+trial.concepts[0]+'</p><p style="font-size: 200%">'+
+    html += '<div><div id="concept-list" style="width: 10%; float:left; padding-left:20%"><p style="font-size: 200%"><br><br>'+trial.concepts[0]+'</p><p style="font-size: 200%">'+
     trial.concepts[1]+'</p><p style="font-size: 200%">'+
     trial.concepts[2]+'</p><p style="font-size: 200%">'+
     trial.concepts[3]+'</p><p style="font-size: 200%">'+
     trial.concepts[4]+'</p>'+'</div>';
-    html += '<div id="jspsych-image-slider-response-stimulus" style="width: 80%;">';
+    html += '<div id="jspsych-image-slider-response-stimulus" style="width: 100%;">';
     html += '<img src="'+trial.stimulus+'" style="';
    
     if(trial.stimulus_height !== null){
@@ -168,7 +168,7 @@ jsPsych.plugins['image-slider-response_InstrMAS'] = (function() {
     //html += '<p><p><p><p><p><p><p>';
     //html += '<br></br>';
 
-    html += '<div>' 
+    html += '<div><br><br>' 
     html += '<div>'
    
     html += '<div class="jspsych-image-slider-response-container" style="position:relative; margin: 0 auto 3em auto; '; // add color to this object? 
@@ -200,8 +200,10 @@ jsPsych.plugins['image-slider-response_InstrMAS'] = (function() {
 
     //Text prompt2
        if (trial.prompt2 !== null){
-        html += '<span style="text-align: center; font-size: 100%;">'+trial.prompt2+'</span>'
+        html += '<span style="display:block;text-align: left; font-size: 100%;">'+trial.prompt2+'</span>'
     }
+
+     html += '<div><br></div>';
 
 
     // add submit button 

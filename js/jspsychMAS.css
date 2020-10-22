@@ -55,6 +55,20 @@
   font-size: 18px;
 }
 
+
+
+
+.jspsych-display-element input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: black;
+    margin-top: -4px;
+}
+
+
 /* borrowing Bootstrap style for btn elements, but combining styles a bit */
 .jspsych-btn {
   display: inline-block;
