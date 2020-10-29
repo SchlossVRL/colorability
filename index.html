@@ -267,9 +267,17 @@ var overview_instructions = {
 
 
 var macro_overview = {
-            type: 'html-button-response',
-            stimulus: 'When you press "Next" the experimental task will begin. There will be blocks of trials where will be presented with 4 sets of concepts. Each set will contain 5 concepts and your task will be to rate how much you associate each concept with a set of 20 colors.',
-            choices: ['Next']
+            type: 'image-slider-response_InstrMAS',
+            stimulus: "data/patches.png",
+            //maintain_aspect_ratio: true,
+            stimulus_height:450,
+            prompt1: "<div style ='text-align:left; font-size:100%; line-height:30px;'>When you press 'Next' the experimental task will begin. There will be blocks of trials where will be presented with 4 sets of concepts. Each set will contain 5 concepts and your task will be to rate how much you associate each concept with a set of 20 colors.</div>",
+            labels: ['Not at all', 'Very Much'],
+            step: 1,
+            start: 0,
+            min: -200,
+            max: 200, 
+            button_label: "Start"
         }
      timeline.push(macro_overview);
 
