@@ -142,8 +142,6 @@ jsPsych.plugins['image-slider-responseMAS'] = (function() {
        {html += '<span style="text-align: center; font-size: 150%;">'+trial.prompt+'</span>';}
    }
 
-   html += '<br></br>'
-
 
     html += '<div id="jspsych-image-slider-response-wrapper" style="margin: 35px 0px;">';
     html += '<div id="jspsych-image-slider-response-stimulus" style=';
@@ -163,7 +161,6 @@ jsPsych.plugins['image-slider-responseMAS'] = (function() {
     html += '">'+trial.stimulus+'</div>';
     html += '</div>';
     html += '<p><p><p><p><p><p><p>';
-    html += '<br></br>'
     html += '<div>'
     html += '<div>'
     
