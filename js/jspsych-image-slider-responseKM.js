@@ -43,6 +43,12 @@ jsPsych.plugins['image-slider-responseMAS'] = (function() {
         default: true,
         description: 'Maintain the aspect ratio after setting width or height'
       },
+      adjust: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'position adjustment',
+        default: null,
+        description: 'Sets amount to adjust left by.'
+      },
       min: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: 'Min slider',
@@ -127,8 +133,13 @@ jsPsych.plugins['image-slider-responseMAS'] = (function() {
     var html = "";
 
     //Text prompt
+
     if (trial.prompt !== null){
-       html += '<span style="text-align: center; font-size: 150%;">'+trial.prompt+'</span>'
+
+        if(trial.adjust !== null){
+       html += '<span style="text-align:left; font-size:100%; line-height:30px;">'+trial.prompt+'</span>';
+    }else
+       {html += '<span style="text-align: center; font-size: 150%;">'+trial.prompt+'</span>';}
    }
 
    html += '<br></br>'
@@ -160,6 +171,10 @@ jsPsych.plugins['image-slider-responseMAS'] = (function() {
     if(trial.slider_width !== null){
       html += 'width:'+trial.slider_width+'px;';
     }
+    if(trial.adjust !== null){
+      html += 'left:'+trial.adjust+'%;';
+    }
+
     html += '">';
     html += '<hr class="verticalC" />' ;
     html += '<hr class="verticalL" />' ;
