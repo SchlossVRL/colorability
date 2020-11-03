@@ -168,7 +168,7 @@ jsPsych.plugins['image-slider-response_InstrMAS'] = (function() {
     //html += '<p><p><p><p><p><p><p>';
     //html += '<br></br>';
 
-    html += '<div><br><br>' 
+    html += '<div>' 
     html += '<div>'
    
     html += '<div class="jspsych-image-slider-response-container" style="position:relative; margin: 0 auto 3em auto; '; // add color to this object? 
