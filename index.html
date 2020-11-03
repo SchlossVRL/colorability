@@ -270,17 +270,17 @@ var overview_instructions = {
         
         var macro_overview = {
             type: 'image-slider-responseMAS',
-                    stimulus: "<div><img src='data/patches.png' style='height:450px;width:auto'></img></div>",
-                    stimulus_height: 450, 
+                    stimulus: "<div><img src='data/patches.png' style='height:500px;width:auto'></img></div>",
+                    stimulus_height: 500, 
                     adjust:30,
                     //stimulus_width: 100,
                     maintain_aspect_ratio: true,
                     labels: ['Not at all', 'Very Much'],
                     response_ends_trial: true,
                     slider_width: 400,
-                    prompt: "<p style='width:1000px'>When you press 'Continue' the experimental task will begin. You will be presented with 4 blocks of trials. In each block, you will be asked to rate how much you associate 5 concepts with each of the colors you see below. In each trial you will be presented with a single color patch out of the 20 you see here and a single concept. Please use the scale to indicate how much you associate the color with the concept from 'not at all' to 'very much'. Try using your mouse to move the cursor on the scale. When you're ready, press 'Continue'.</p>",
-                    require_movement: true, 
-                    post_trial_gap: 1000,
+                    prompt: "<p style='width:1000px'>In this experiment you will be asked to rate how much you associate colors from the set below with each of a series of concepts. You will be presented with 4 blocks of trials, one for each concept set. Before the start of each block, you will get an overview of all of the concepts you will be asked to rate in that block. <br> Please press Continue when you are ready to see the first overview screen.</p>",
+                    require_movement: false, 
+                    post_trial_gap: 500,
                     //prompt_location: "above",
                     step: 1,
                     start: 0,
@@ -316,13 +316,13 @@ var instructions = {
                     type: 'image-slider-response_InstrMAS',  
                     stimulus: "data/patches.png",
                     //maintain_aspect_ratio: true,
-                    stimulus_height:450,
+                    stimulus_height:600,
                     labels: ['Not at all', 'Very Much'],
                     concepts: exemplars,
                     response_ends_trial: true,
                     slider_width: 400,
-                    prompt1: "<div style ='text-align:left; font-size:100%; line-height:30px;'>During the upcoming set of trials you will be asked to rate how much you associate colors with different concepts.<br>"+"Below, you can see each of the colors you will be asked to rate. Next to the colors is the list of concepts.<br>You will be asked to rate how much you associate each color with each concept on a scale from 'not at all' to 'very much' like the one below.</div>",
-                    prompt2: "Now, please look at the list of concepts and colors. For each concept, think about the color you associate 'very much' with the concept. When you see that color during the experiment, please rate it near the 'very much' endpoint of the scale.<br><br>Now, please think about which color you associate 'not at all' with each concept. When you see that color during the experiment, please rate it near the 'not at all' endpoint of the scale.<br><br>Please use the full range of the scale. That is, if a color is somewhat associated with the concept, you would click partway between the middle point and right side of the scale. You will be asked to rate each color for a given concept before moving on to the next concept.<br><br>Press the 'Start' button when you're ready to begin.",
+                    prompt1: "<div style ='text-align:left; font-size:100%; line-height:30px;'>In this block, you will be asked to rate the following concepts in the set below.<br>"+"Below, you can see each of the colors you will be asked to rate. Next to the colors is the list of concepts.<br>You will be asked to rate how much you associate each color with each concept on a scale from 'not at all' to 'very much' like the one below.</div>",
+                    prompt2: "<div style ='text-align:left; font-size:100%; line-height:30px;'>Now, please look at the list of concepts and colors. For each concept, think about the color you associate 'very much' with the concept. When you see that color during the experiment, please rate it near the 'very much' endpoint of the scale.<br><br>Now, please think about which color you associate 'not at all' with each concept. When you see that color during the experiment, please rate it near the 'not at all' endpoint of the scale.<br><br>Please use the full range of the scale. That is, if a color is somewhat associated with the concept, you would click partway between the middle point and right side of the scale. You will be asked to rate each color for a given concept before moving on to the next concept.<br><br>Press the 'Start' button when you're ready to begin.</div>",
                     require_movement: false, 
                     require_movement: false, 
                     step: 1,
@@ -409,12 +409,35 @@ for(i=0;i<exemplars.length;i++){
      }else if(i<exemplars.length){
         var block_break = {
         type: "html-button-response",
-        stimulus:  "<p>Great Job! You've finished block "+(i+1)+".<br></br> You have "+(exemplars.length-(i+1))+" block(s) left to go.<br></br></p>",
+        stimulus:  "<p>You have completed ratings for concept "+(i+1)+" out of 5 within set "+(k+1)+" out of 4.<br></br></p>",
+
          choices: ['Next'],   
          };
          timeline.push(block_break)
      }
 }
+
+if(k==3){
+
+     var block_break = {
+        type: "html-button-response",
+        stimulus:  "<p>Great Job! You're done rating all concept sets<br></br></p>",
+         choices: ['Next'],   
+         };
+         timeline.push(block_break)
+
+}else if(k<3){
+
+     var block_break = {
+        type: "html-button-response",
+        stimulus:  "Great job! You have completed set "+ (k+1)+" out of 4. Please click Next when you are ready to see the overview for the next concept.<br></br></p>",
+
+         choices: ['Next'],   
+         };
+         timeline.push(block_break)
+
+}
+
 }
 
 
