@@ -409,7 +409,7 @@ for(i=0;i<exemplars.length;i++){
      }else if(i<exemplars.length){
         var block_break = {
         type: "html-button-response",
-        stimulus:  "<p>You have completed ratings for concept "+(i+1)+" out of 5 within set "+(k+1)+" out of 4.<br></br></p>",
+        stimulus:  "<p>You have completed ratings for concept "+(i+1)+" out of 5 within this set.<br></br></p>",
 
          choices: ['Next'],   
          };
@@ -504,8 +504,7 @@ function finalSave (){
              stimulus: function(){
                // jsPsych.data.get().localSave('csv',randomID+".csv") // saves to local device  
                 return "<p>Great job! You have finished the experiment.</p>" +
-                "<p>The goal of this experiment is to investigate what factors influence peoples associations between colors and concepts. In the experiment, you rated how much you associated colors with different concepts." +
-                "<p>Participants were randomly assigned a subset of concepts out of a list of concepts we are interested in. For example, you may have rated associations for colors with fruits, whereas other participants provided ratings for colors with activies." +
+                "<p>The goal of this experiment is to investigate what factors influence peoples associations between colors and concepts.</p>"  +
                 "<p>Please do not inform other potential participants of the hypotheses in our experiment.</p>"+
                 "<p>Credit for your participation will be appear on SONA in the next few days.</p>"+
                 "<p>Thank you for participating!<br>You may now close this window.</p>";},
