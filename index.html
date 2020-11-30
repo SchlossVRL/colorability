@@ -27,6 +27,7 @@
         <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>  
         <script type="text/javascript" src="data/tab20.json"></script>  
+        <script type="text/javascript" src="data/UW71.json"></script>  
         <script src ="js/jspsych-html-slider-response.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
         <style>
@@ -122,14 +123,30 @@ jsPsych.data.addProperties({
   workerID: workerID
 });
 
-start_experiment();
+
+var assigned_condition = null;
+var n_conditions = 4;
+
+//start_experiment();
 
 
-//var assigned_condition = null;
-//var n_conditions = 4;
-// Choose a concept
+serverComm.assign_condition(subject_id, n_conditions,
+  function(response){
+    assigned_condition = response.assignedCondition;
+   
+    start_experiment();
+    },
+  function(){
+    document.querySelector('body').innerHTML = '<p> Our apologies. There was a technical error on our end while loading the experiment.</p><p>You will not be able to complete the experiment. We are sorry for the trouble. You can contact the researchers at kmukherjee2@wisc.edu with any questions.</p>';
+  });
+
 
 function start_experiment(){
+
+concept_list = Object.keys(concept_dict);
+concept = concept_list[assigned_condition];
+
+exemplars =  concept_dict[concept];
 
 
 
@@ -267,61 +284,16 @@ var overview_instructions = {
 
 
 
-        
-        var macro_overview = {
-            type: 'image-slider-responseMAS',
-                    stimulus: "<div><img src='data/patches.png' style='height:500px;width:auto'></img></div>",
-                    stimulus_height: 500, 
-                    adjust:30,
-                    //stimulus_width: 100,
-                    maintain_aspect_ratio: true,
-                    labels: ['Not at all', 'Very Much'],
-                    response_ends_trial: true,
-                    slider_width: 400,
-                    prompt: "<p style='width:1000px'>In this experiment you will be asked to rate how much you associate colors from the set below with each of a series of concepts. You will be presented with 4 blocks of trials, one for each concept set. Before the start of each block, you will get an overview of all of the concepts you will be asked to rate in that block. <br> Please press Continue when you are ready to see the first overview screen.</p>",
-                    require_movement: false, 
-                    post_trial_gap: 500,
-                    //prompt_location: "above",
-                    step: 1,
-                    start: 0,
-                    min: -200,
-                    max: 200   }   
-     timeline.push(macro_overview);
-
-
-
-
-
-
-
-/* ---------------------------------------  Associations Ratings --------------------------------------- */
-
-
-
-//Generate order of colors
-var category_list = Object.keys(concept_dict);
-var concept_order = jsPsych.randomization.sampleWithoutReplacement(_.range(Object.keys(concept_dict).length), 4);
-for(k=0;k<4;k++){
-
-
-
-
-category = category_list[concept_order[k]]; //concept category based on assigned condition
-
-//get exemplars of concept-category
-
-exemplars =  concept_dict[category];
-
 var instructions = {
                     type: 'image-slider-response_InstrMAS',  
-                    stimulus: "data/patches.png",
+                    stimulus: "data/patches71.png",
                     //maintain_aspect_ratio: true,
-                    stimulus_height:600,
+                    stimulus_height:450,
                     labels: ['Not at all', 'Very Much'],
                     concepts: exemplars,
                     response_ends_trial: true,
                     slider_width: 400,
-                    prompt1: "<div style ='text-align:left; font-size:100%; line-height:30px;'>In this block, you will be asked to rate the following concepts in the set below.<br>"+"Below, you can see each of the colors you will be asked to rate. Next to the colors is the list of concepts.<br>You will be asked to rate how much you associate each color with each concept on a scale from 'not at all' to 'very much' like the one below.</div>",
+                    prompt1: "<div style ='text-align:left; font-size:100%; line-height:30px;'>During this experiment you will be asked to rate how much you associate colors with different concepts.<br>"+"Below, you can see each of the colors you will be asked to rate. Next to the colors is the list of concepts.<br>You will be asked to rate how much you associate each color with each concept on a scale from 'not at all' to 'very much' like the one below.</div>",
                     prompt2: "<div style ='text-align:left; font-size:100%; line-height:30px;'>Now, please look at the list of concepts and colors. For each concept, think about the color you associate 'very much' with the concept. When you see that color during the experiment, please rate it near the 'very much' endpoint of the scale.<br><br>Now, please think about which color you associate 'not at all' with each concept. When you see that color during the experiment, please rate it near the 'not at all' endpoint of the scale.<br><br>Please use the full range of the scale. That is, if a color is somewhat associated with the concept, you would click partway between the middle point and right side of the scale. You will be asked to rate each color for a given concept before moving on to the next concept.<br><br>Press the 'Start' button when you're ready to begin.</div>",
                     require_movement: false, 
                     require_movement: false, 
@@ -338,34 +310,31 @@ var instructions = {
 
 
 
+/* ---------------------------------------  Associations Ratings --------------------------------------- */
 
-// Inter trial interval //
-    var fixation = {
-                type: 'html-keyboard-response',
-                stimulus: '<div style= "font-size:40px;">+</div>',
-                choices: jsPsych.NO_KEYS,
-                trial_duration: 200}    
+
+
+//Generate order of colors
 
 
 for(i=0;i<exemplars.length;i++){
 
-    var color_order = jsPsych.randomization.sampleWithoutReplacement(_.range(Object.keys(tab_20).length), 20);
-    var block_break0 = {
+    var color_order = jsPsych.randomization.sampleWithoutReplacement(_.range(Object.keys(uw_71).length), 71);
+       var block_break0 = {
         type: "html-button-response",
         stimulus:  "<p>In this block of trials, you will be asked to rate how much you associate each color with:</p > "+
-         "<p style = 'font-size:150%; font-weight: bold'>"+exemplars[i]+"</p><br></br>",
-        choices: ['Continue'],   
-        };
-     
-    timeline.push(block_break0);
+             "<p style = 'font-size:150%; font-weight: bold'>"+exemplars[i]+"</p><br></br>",
+         choices: ['Continue'],   
+         };
+         timeline.push(block_break0);
+   
 
 
-
-    for(j=0;j<Object.keys(tab_20).length;j++){
+    for(j=0;j<Object.keys(uw_71).length;j++){
        
 
 
-        this_col = fullColorHex(tab_20[color_order[j]]['r'],tab_20[color_order[j]]['g'],tab_20[color_order[j]]['b'])
+        this_col = fullColorHex(uw_71[color_order[j]]['r'],uw_71[color_order[j]]['g'],uw_71[color_order[j]]['b'])
 
      
 
@@ -373,10 +342,13 @@ for(i=0;i<exemplars.length;i++){
                     var rating_trial = {
                     type: 'image-slider-responseMAS',  
                     data: { color_rgb: this_col,
-                    concept: category,
+                    concept: concept,
                     time_finished: Date.now(),
                     color_index:color_order[j]},
                     stimulus: '<div style= "height:100px;width:100px;border:00px solid powderblue;display: inline-block;background:#'+this_col+'"></div>',
+
+
+
                     stimulus_height: 80, 
                     //stimulus_width: 100,
                     maintain_aspect_ratio: true,
@@ -385,13 +357,14 @@ for(i=0;i<exemplars.length;i++){
                     slider_width: 400,
                     prompt: exemplars[i],
                     require_movement: true, 
-                    post_trial_gap: 500,
+                    post_trial_gap: 1000,
                     //prompt_location: "above",
                     step: 1,
                     start: 0,
                     min: -200,
                     max: 200        
                     }
+
                     timeline.push(rating_trial)
 
     }
@@ -401,7 +374,7 @@ for(i=0;i<exemplars.length;i++){
     if(i==exemplars.length-1){
         var block_break = {
         type: "html-button-response",
-        stimulus:  "<p>Great Job! You're done rating all concepts for this set!<br></br></p>",
+        stimulus:  "<p>Great Job! You're done rating all concepts!<br></br></p>",
          choices: ['Next'],   
          };
          timeline.push(block_break)
@@ -409,36 +382,14 @@ for(i=0;i<exemplars.length;i++){
      }else if(i<exemplars.length){
         var block_break = {
         type: "html-button-response",
-        stimulus:  "<p>You have completed ratings for concept "+(i+1)+" out of 5 within this set.<br></br></p>",
-
+        stimulus:  "<p>Great Job! You've finished block "+(i+1)+".<br></br> You have "+(exemplars.length-(i+1))+" block(s) left to go.<br></br></p>",
          choices: ['Next'],   
          };
          timeline.push(block_break)
      }
-}
-
-if(k==3){
-
-     var block_break = {
-        type: "html-button-response",
-        stimulus:  "<p>Great Job! You're done rating all concept sets<br></br></p>",
-         choices: ['Next'],   
-         };
-         timeline.push(block_break)
-
-}else if(k<3){
-
-     var block_break = {
-        type: "html-button-response",
-        stimulus:  "Great job! You have completed set "+ (k+1)+" out of 4. Please click Next when you are ready to see the overview for the next concept<br></br></p>",
-
-         choices: ['Next'],   
-         };
-         timeline.push(block_break)
 
 }
 
-}
 
 
 
@@ -504,7 +455,8 @@ function finalSave (){
              stimulus: function(){
                // jsPsych.data.get().localSave('csv',randomID+".csv") // saves to local device  
                 return "<p>Great job! You have finished the experiment.</p>" +
-                "<p>The goal of this experiment is to investigate what factors influence peoples associations between colors and concepts.</p>"  +
+                "<p>The goal of this experiment is to investigate what factors influence peoples associations between colors and concepts. In the experiment, you rated how much you associated colors with different concepts." +
+                "<p>Participants were randomly assigned a subset of concepts out of a list of concepts we are interested in. For example, you may have rated associations for colors with fruits, whereas other participants provided ratings for colors with activies." +
                 "<p>Please do not inform other potential participants of the hypotheses in our experiment.</p>"+
                 "<p>Credit for your participation will be appear on SONA in the next few days.</p>"+
                 "<p>Thank you for participating!<br>You may now close this window.</p>";},
